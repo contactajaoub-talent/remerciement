@@ -393,17 +393,7 @@ a{text-decoration:none;color:inherit}
 </footer>
 
 <script>
-/**
- * IMPORTANT: Remplacez cette URL par l'URL de votre Google Apps Script Web App déployée.
- * Pour obtenir cette URL:
- * 1. Ouvrez votre projet Apps Script
- * 2. Cliquez sur "Déployer" > "Nouveau déploiement"
- * 3. Type: "Application Web"
- * 4. Exécuter en tant que: "Moi"
- * 5. Accès: "Tout le monde"
- * 6. Copiez l'URL et collez-la ci-dessous
- */
-const APPS_SCRIPT_URL = "VOTRE_URL_APPS_SCRIPT_ICI";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxnGuDfjHeatN54I53hIS4vo9kD1RcR0js3cIhKo-NXTEf5KYOfxUqmhq6xJd47I8hp/exec";
 
 async function handleSubmit(e) {
   e.preventDefault();
@@ -414,36 +404,25 @@ async function handleSubmit(e) {
   const formSuccess = document.getElementById('formSuccess');
   const submitBtn = document.getElementById('submitBtn');
   
-  // Disable button
   submitBtn.disabled = true;
-  
-  // Show loading
   formContent.style.display = 'none';
   formLoading.classList.add('active');
   
-  // Collect form data
   const formData = new FormData(form);
   
   try {
-    // Option A: Submit to Google Apps Script Web App
     if (APPS_SCRIPT_URL !== "VOTRE_URL_APPS_SCRIPT_ICI") {
       const response = await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
+        mode: 'no-cors',
         body: formData
       });
     }
     
-    // Option B: Submit to Google Forms directly (backup)
-    // Uncomment and configure if using Google Forms instead:
-    // const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/VOTRE_FORM_ID/formResponse";
-    // await fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
-    
-    // Show success after short delay for UX
     setTimeout(() => {
       formLoading.classList.remove('active');
       formSuccess.classList.add('active');
       
-      // Update step indicator
       document.querySelectorAll('.step-dot')[1].classList.remove('active');
       document.querySelectorAll('.step-dot')[1].classList.add('done');
       document.querySelectorAll('.step-dot')[1].innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
@@ -454,14 +433,11 @@ async function handleSubmit(e) {
       document.querySelectorAll('.step-dot')[2].classList.add('active');
       document.querySelectorAll('.step-label')[2].classList.add('active-label');
       
-      // Scroll to top of form section
       document.getElementById('formSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 1500);
     
   } catch (error) {
     console.error('Erreur:', error);
-    
-    // Still show success to user (data might have been saved)
     setTimeout(() => {
       formLoading.classList.remove('active');
       formSuccess.classList.add('active');
@@ -471,7 +447,6 @@ async function handleSubmit(e) {
   return false;
 }
 
-// Auto-select offer from URL param (e.g., ?offer=pack)
 const urlParams = new URLSearchParams(window.location.search);
 const offerParam = urlParams.get('offer');
 if (offerParam) {
