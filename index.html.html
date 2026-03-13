@@ -393,6 +393,7 @@ a{text-decoration:none;color:inherit}
 </footer>
 
 <script>
+<script>
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxnGuDfjHeatN54I53hIS4vo9kD1RcR0js3cIhKo-NXTEf5KYOfxUqmhq6xJd47I8hp/exec";
 
 async function handleSubmit(e) {
@@ -408,16 +409,32 @@ async function handleSubmit(e) {
   formContent.style.display = 'none';
   formLoading.classList.add('active');
   
-  const formData = new FormData(form);
+  // COLLECTER LES DONNÉES EN JSON (au lieu de FormData!)
+  const formDataObj = {
+    offer: document.getElementById('offer').value,
+    fullName: document.getElementById('fullName').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    country: document.getElementById('country').value,
+    objective: document.getElementById('objective').value,
+    targetRole: document.getElementById('targetRole').value,
+    urgency: document.getElementById('urgency').value,
+    linkedin: document.getElementById('linkedin').value,
+    cvLink: document.getElementById('cvLink').value,
+    notes: document.getElementById('notes').value
+  };
   
   try {
-    if (APPS_SCRIPT_URL !== "VOTRE_URL_APPS_SCRIPT_ICI") {
-      const response = await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-      });
-    }
+    // Envoyer en JSON!
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formDataObj)
+    });
+    
+    console.log("✅ Données envoyées avec succès");
     
     setTimeout(() => {
       formLoading.classList.remove('active');
@@ -460,6 +477,7 @@ if (offerParam) {
     offerSelect.value = offerMap[offerParam];
   }
 }
+</script>
 </script>
 /**
  * CODE À INTÉGRER DANS VOTRE FORMULAIRE HTML (Vercel)
