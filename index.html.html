@@ -403,7 +403,7 @@ a{text-decoration:none;color:inherit}
  * 5. Accès: "Tout le monde"
  * 6. Copiez l'URL et collez-la ci-dessous
  */
-const APPS_SCRIPT_URL = "VOTRE_URL_APPS_SCRIPT_ICI";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwN7YnaemuXT7PCxEYJKbwmz8K7LcLikPY3WbkB2mNanYkE0HiUiUVIXQh8xmStF99R/exec";
 
 async function handleSubmit(e) {
   e.preventDefault();
@@ -427,10 +427,27 @@ async function handleSubmit(e) {
   try {
     // Option A: Submit to Google Apps Script Web App
     if (APPS_SCRIPT_URL !== "VOTRE_URL_APPS_SCRIPT_ICI") {
-      const response = await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        body: formData
-      });
+      const data = {
+  offer: formData.get("Offre achetée"),
+  fullName: formData.get("Nom complet"),
+  email: formData.get("Email"),
+  phone: formData.get("Téléphone / WhatsApp"),
+  country: formData.get("Pays"),
+  objective: formData.get("Objectif professionnel"),
+  targetRole: formData.get("Poste cible"),
+  urgency: formData.get("Niveau d'urgence"),
+  linkedin: formData.get("Lien LinkedIn"),
+  cvLink: formData.get("Lien CV / Drive"),
+  notes: formData.get("Informations complémentaires")
+};
+
+const response = await fetch(APPS_SCRIPT_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(data)
+});
     }
     
     // Option B: Submit to Google Forms directly (backup)
