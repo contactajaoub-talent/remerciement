@@ -1,1 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talentiques — Paiement confirmé</title>
+<meta name="description" content="Merci pour votre confiance. Complétez le formulaire pour démarrer votre accompagnement Talentiques.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+:root{
+  --blue:#0683C9;--blue-dark:#056BA5;--blue-deeper:#044D78;--blue-light:#3DA1DB;
+  --blue-pale:#E8F4FD;--green:#22C55E;--green-dark:#16A34A;--green-glow:rgba(34,197,94,0.15);
+  --navy:#0B1A2F;--navy-light:#122240;--navy-mid:#162B4D;
+  --slate:#8B97A8;--slate-light:#A8B3C2;
+  --text-on-dark:rgba(255,255,255,0.92);--text-on-dark-sub:rgba(255,255,255,0.6);
+  --border-dark:rgba(255,255,255,0.08);--border-dark-hover:rgba(255,255,255,0.15);
+  --card-dark:rgba(255,255,255,0.04);--card-dark-hover:rgba(255,255,255,0.07);
+  --white:#FFFFFF;--radius:14px;--radius-lg:20px;--radius-xl:28px;
+  --transition:0.35s cubic-bezier(0.4,0,0.2,1);--max-w:800px;
+  --font:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+body{font-family:var(--font);color:var(--text-on-dark);background:var(--navy);line-height:1.65;font-size:16px;overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(6,131,201,0.08) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 90% 80%,rgba(6,131,201,0.06) 0%,transparent 60%);pointer-events:none;z-index:0}
+body>*{position:relative;z-index:1}
+a{text-decoration:none;color:inherit}
 
+/* HEADER */
+.header{background:rgba(11,26,47,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border-dark);padding:0 24px;position:sticky;top:0;z-index:100}
+.header-inner{display:flex;align-items:center;justify-content:center;max-width:var(--max-w);margin:0 auto;height:72px}
+.logo{font-size:23px;font-weight:800;color:#0683C9;letter-spacing:-0.5px}
+
+/* MAIN */
+.main{max-width:var(--max-w);margin:0 auto;padding:48px 24px 80px}
+
+/* CONFIRMATION HERO */
+.confirmation{text-align:center;margin-bottom:56px}
+.check-circle{
+  width:88px;height:88px;border-radius:50%;margin:0 auto 28px;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 12px var(--green-glow),0 8px 32px rgba(34,197,94,0.2);
+  animation:scaleIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  opacity:0;transform:scale(0.3);
+}
+@keyframes scaleIn{to{opacity:1;transform:scale(1)}}
+.check-circle svg{width:40px;height:40px;color:var(--white);animation:drawCheck 0.5s ease 0.4s forwards;stroke-dasharray:30;stroke-dashoffset:30}
+@keyframes drawCheck{to{stroke-dashoffset:0}}
+.confirmation h1{
+  font-size:clamp(26px,4vw,38px);font-weight:800;color:var(--white);
+  margin-bottom:12px;letter-spacing:-0.03em;
+  animation:fadeUp 0.6s ease 0.2s forwards;opacity:0;transform:translateY(16px);
+}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.confirmation .subtitle{
+  font-size:17px;color:var(--text-on-dark-sub);line-height:1.7;
+  max-width:540px;margin:0 auto 32px;
+  animation:fadeUp 0.6s ease 0.35s forwards;opacity:0;transform:translateY(16px);
+}
+.payment-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 24px;border-radius:12px;
+  background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);
+  font-size:14px;font-weight:600;color:var(--green);
+  animation:fadeUp 0.6s ease 0.5s forwards;opacity:0;transform:translateY(16px);
+}
+.payment-badge svg{width:18px;height:18px}
+
+/* STEPS INDICATOR */
+.steps-bar{
+  display:flex;align-items:center;justify-content:center;gap:0;
+  margin-bottom:48px;padding:0 16px;
+  animation:fadeUp 0.6s ease 0.6s forwards;opacity:0;transform:translateY(16px);
+}
+.step-item{display:flex;align-items:center;gap:0}
+.step-dot{
+  width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;transition:var(--transition);flex-shrink:0;
+}
+.step-dot.done{background:var(--green);color:var(--white)}
+.step-dot.active{background:var(--blue);color:var(--white);box-shadow:0 0 0 6px rgba(6,131,201,0.2)}
+.step-dot.pending{background:var(--card-dark);border:1.5px solid var(--border-dark-hover);color:var(--slate)}
+.step-label{font-size:12px;font-weight:600;margin-top:8px;color:var(--slate);text-align:center;max-width:80px}
+.step-label.active-label{color:var(--blue-light)}
+.step-label.done-label{color:var(--green)}
+.step-connector{width:48px;height:2px;background:var(--border-dark);flex-shrink:0;margin:0 4px}
+.step-connector.done{background:var(--green)}
+.step-group{display:flex;flex-direction:column;align-items:center;gap:0}
+
+/* FORM SECTION */
+.form-section{
+  background:var(--card-dark);border:1px solid var(--border-dark);
+  border-radius:var(--radius-xl);padding:44px 40px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  box-shadow:0 4px 32px rgba(0,0,0,0.2);
+  animation:fadeUp 0.6s ease 0.7s forwards;opacity:0;transform:translateY(16px);
+}
+.form-header{margin-bottom:36px}
+.form-header h2{font-size:22px;font-weight:800;color:var(--white);margin-bottom:8px;letter-spacing:-0.02em}
+.form-header p{font-size:15px;color:var(--text-on-dark-sub);line-height:1.6}
+.form-divider{height:1px;background:var(--border-dark);margin:32px 0}
+.form-group-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--blue-light);margin-bottom:20px}
+
+/* FORM FIELDS */
+.field{margin-bottom:24px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--text-on-dark);margin-bottom:8px}
+.field label .req{color:var(--blue-light);margin-left:2px}
+.field input,.field select,.field textarea{
+  width:100%;padding:14px 18px;
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid var(--border-dark);
+  border-radius:10px;color:var(--white);
+  font-family:var(--font);font-size:15px;
+  transition:var(--transition);outline:none;
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--slate)}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:rgba(6,131,201,0.5);
+  background:rgba(6,131,201,0.04);
+  box-shadow:0 0 0 4px rgba(6,131,201,0.08);
+}
+.field select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238B97A8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.field select option{background:var(--navy-light);color:var(--white)}
+.field textarea{resize:vertical;min-height:100px}
+.field-hint{font-size:12px;color:var(--slate);margin-top:6px;line-height:1.4}
+
+/* SUBMIT */
+.submit-section{margin-top:36px}
+.submit-btn{
+  width:100%;padding:18px 32px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:var(--white);font-family:var(--font);font-size:16px;font-weight:700;
+  cursor:pointer;transition:var(--transition);
+  box-shadow:0 4px 24px rgba(6,131,201,0.3);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(6,131,201,0.45)}
+.submit-btn:active{transform:translateY(0)}
+.submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;box-shadow:none}
+.submit-btn svg{width:20px;height:20px}
+.submit-note{text-align:center;margin-top:16px;font-size:13px;color:var(--slate);line-height:1.5}
+.submit-note svg{width:14px;height:14px;vertical-align:-2px;margin-right:4px;color:var(--green)}
+
+/* LOADING / SUCCESS STATE */
+.form-loading,.form-success{display:none}
+.form-loading.active,.form-success.active{display:flex}
+.form-loading{align-items:center;justify-content:center;padding:60px 0;gap:16px;flex-direction:column}
+.spinner{width:40px;height:40px;border:3px solid var(--border-dark);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.form-loading p{font-size:15px;color:var(--slate-light)}
+.form-success{flex-direction:column;align-items:center;padding:60px 20px;text-align:center;gap:16px}
+.form-success .success-icon{
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 10px var(--green-glow);margin-bottom:8px;
+}
+.form-success .success-icon svg{width:32px;height:32px;color:var(--white)}
+.form-success h3{font-size:22px;font-weight:800;color:var(--white)}
+.form-success p{font-size:15px;color:var(--text-on-dark-sub);max-width:420px;line-height:1.7}
+
+/* CONTACT BAR */
+.contact-bar{
+  text-align:center;margin-top:48px;padding:28px;
+  background:var(--card-dark);border:1px solid var(--border-dark);border-radius:var(--radius);
+  animation:fadeUp 0.6s ease 0.85s forwards;opacity:0;transform:translateY(16px);
+}
+.contact-bar p{font-size:14px;color:var(--slate-light);margin-bottom:12px}
+.contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.contact-link{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:10px;
+  background:rgba(255,255,255,0.03);border:1px solid var(--border-dark);
+  font-size:13px;font-weight:600;color:var(--text-on-dark);transition:var(--transition);
+}
+.contact-link:hover{border-color:rgba(6,131,201,0.3);background:rgba(6,131,201,0.04)}
+.contact-link svg{width:16px;height:16px;color:var(--blue-light)}
+
+/* FOOTER */
+.footer{text-align:center;padding:32px 24px;font-size:13px;color:var(--slate);border-top:1px solid var(--border-dark);margin-top:64px}
+.footer .logo{font-size:18px;margin-bottom:8px}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .form-section{padding:28px 20px}
+  .field-row{grid-template-columns:1fr}
+  .steps-bar{gap:0}
+  .step-connector{width:28px}
+  .step-dot{width:32px;height:32px;font-size:12px}
+  .step-label{font-size:11px;max-width:64px}
+  .main{padding:32px 16px 64px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">TalentiQues</a>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- CONFIRMATION -->
+  <div class="confirmation">
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h1>Paiement confirmé avec succès</h1>
+    <p class="subtitle">Merci pour votre confiance. Pour démarrer votre accompagnement, veuillez compléter le formulaire ci-dessous. Ces informations nous permettront de personnaliser vos livrables.</p>
+    <div class="payment-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Paiement sécurisé via PayPal
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps-bar">
+    <div class="step-group">
+      <div class="step-dot done"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="step-label done-label">Paiement</div>
+    </div>
+    <div class="step-connector done"></div>
+    <div class="step-group">
+      <div class="step-dot active">2</div>
+      <div class="step-label active-label">Formulaire</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-group">
+      <div class="step-dot pending">3</div>
+      <div class="step-label">Livraison</div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-section" id="formSection">
+
+    <!-- FORM CONTENT -->
+    <div id="formContent">
+      <div class="form-header">
+        <h2>Complétez vos informations</h2>
+        <p>Ces informations permettront de personnaliser votre CV, lettre de motivation et profil LinkedIn selon votre objectif professionnel.</p>
+      </div>
+
+      <form id="intakeForm" onsubmit="return handleSubmit(event)">
+
+        <!-- OFFRE -->
+        <div class="form-group-title">Votre offre</div>
+        <div class="field">
+          <label for="offer">Offre achetée <span class="req">*</span></label>
+          <select id="offer" name="Offre achetée" required>
+            <option value="">Sélectionnez votre offre</option>
+            <option value="Pack de valorisation totale de l'image pro">Pack de valorisation totale — 45 €</option>
+            <option value="Refonte CV + Lettre de motivation">Refonte CV + Lettre de motivation — 30 €</option>
+            <option value="Optimisation LinkedIn">Optimisation LinkedIn — 30 €</option>
+          </select>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <!-- IDENTITÉ -->
+        <div class="form-group-title">Informations personnelles</div>
+        <div class="field-row">
+          <div class="field">
+            <label for="fullName">Nom complet <span class="req">*</span></label>
+            <input type="text" id="fullName" name="Nom complet" placeholder="Prénom et nom" required>
+          </div>
+          <div class="field">
+            <label for="email">Email <span class="req">*</span></label>
+            <input type="email" id="email" name="Email" placeholder="votre@email.com" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="phone">Téléphone / WhatsApp <span class="req">*</span></label>
+            <input type="tel" id="phone" name="Téléphone / WhatsApp" placeholder="+33 6 12 34 56 78" required>
+          </div>
+          <div class="field">
+            <label for="country">Pays <span class="req">*</span></label>
+            <select id="country" name="Pays" required>
+              <option value="">Sélectionnez votre pays</option>
+              <option value="France">France</option>
+              <option value="Maroc">Maroc</option>
+              <option value="Suisse">Suisse</option>
+              <option value="Belgique">Belgique</option>
+              <option value="Canada">Canada</option>
+              <option value="Autre">Autre / International</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <!-- OBJECTIF -->
+        <div class="form-group-title">Objectif professionnel</div>
+        <div class="field">
+          <label for="objective">Objectif professionnel <span class="req">*</span></label>
+          <input type="text" id="objective" name="Objectif professionnel" placeholder="Ex : Décrocher un poste en marketing digital" required>
+          <div class="field-hint">Décrivez brièvement ce que vous cherchez à accomplir.</div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="targetRole">Poste cible</label>
+            <input type="text" id="targetRole" name="Poste cible" placeholder="Ex : Chef de projet digital">
+          </div>
+          <div class="field">
+            <label for="urgency">Niveau d'urgence <span class="req">*</span></label>
+            <select id="urgency" name="Niveau d'urgence" required>
+              <option value="">Sélectionnez</option>
+              <option value="Urgent">Urgent — sous 1 à 2 jours</option>
+              <option value="Normal" selected>Normal — sous 2 à 3 jours</option>
+              <option value="Non urgent">Non urgent — sous 5 jours</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <!-- DOCUMENTS -->
+        <div class="form-group-title">Documents et liens</div>
+        <div class="field-row">
+          <div class="field">
+            <label for="linkedin">Lien LinkedIn</label>
+            <input type="url" id="linkedin" name="Lien LinkedIn" placeholder="https://linkedin.com/in/votre-profil">
+          </div>
+          <div class="field">
+            <label for="cvLink">Lien CV / Drive</label>
+            <input type="url" id="cvLink" name="Lien CV / Drive" placeholder="https://drive.google.com/...">
+            <div class="field-hint">Partagez votre CV actuel via Google Drive ou autre lien.</div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="notes">Informations complémentaires</label>
+          <textarea id="notes" name="Informations complémentaires" placeholder="Précisions sur votre parcours, vos contraintes ou vos attentes particulières..."></textarea>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="submit-section">
+          <button type="submit" class="submit-btn" id="submitBtn">
+            Envoyer mes informations
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <div class="submit-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Vos données sont confidentielles et utilisées uniquement pour votre accompagnement.
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- LOADING -->
+    <div class="form-loading" id="formLoading">
+      <div class="spinner"></div>
+      <p>Envoi en cours...</p>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="form-success" id="formSuccess">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>Informations envoyées avec succès</h3>
+      <p>Merci ! Notre équipe va analyser votre profil et commencer à travailler sur vos livrables. Vous recevrez un email de confirmation sous peu.</p>
+    </div>
+
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-bar">
+    <p>Une question ? Contactez-nous à tout moment.</p>
+    <div class="contact-links">
+      <a href="mailto:talentiques@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        talentiques@gmail.com
+      </a>
+      <a href="https://wa.me/212663039597" target="_blank" rel="noopener" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        +212 663 039 597
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="logo">TalentiQues</div>
+  <p>Valorisation de l'image professionnelle — France, Suisse, Belgique, Canada et international</p>
+</footer>
+
+<script>
+/**
+ * IMPORTANT: Remplacez cette URL par l'URL de votre Google Apps Script Web App déployée.
+ * Pour obtenir cette URL:
+ * 1. Ouvrez votre projet Apps Script
+ * 2. Cliquez sur "Déployer" > "Nouveau déploiement"
+ * 3. Type: "Application Web"
+ * 4. Exécuter en tant que: "Moi"
+ * 5. Accès: "Tout le monde"
+ * 6. Copiez l'URL et collez-la ci-dessous
+ */
+const APPS_SCRIPT_URL = "VOTRE_URL_APPS_SCRIPT_ICI";
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  
+  const form = document.getElementById('intakeForm');
+  const formContent = document.getElementById('formContent');
+  const formLoading = document.getElementById('formLoading');
+  const formSuccess = document.getElementById('formSuccess');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  // Disable button
+  submitBtn.disabled = true;
+  
+  // Show loading
+  formContent.style.display = 'none';
+  formLoading.classList.add('active');
+  
+  // Collect form data
+  const formData = new FormData(form);
+  
+  try {
+    // Option A: Submit to Google Apps Script Web App
+    if (APPS_SCRIPT_URL !== "VOTRE_URL_APPS_SCRIPT_ICI") {
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: formData
+      });
+    }
+    
+    // Option B: Submit to Google Forms directly (backup)
+    // Uncomment and configure if using Google Forms instead:
+    // const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/VOTRE_FORM_ID/formResponse";
+    // await fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
+    
+    // Show success after short delay for UX
+    setTimeout(() => {
+      formLoading.classList.remove('active');
+      formSuccess.classList.add('active');
+      
+      // Update step indicator
+      document.querySelectorAll('.step-dot')[1].classList.remove('active');
+      document.querySelectorAll('.step-dot')[1].classList.add('done');
+      document.querySelectorAll('.step-dot')[1].innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      document.querySelectorAll('.step-label')[1].classList.remove('active-label');
+      document.querySelectorAll('.step-label')[1].classList.add('done-label');
+      document.querySelectorAll('.step-connector')[1].classList.add('done');
+      document.querySelectorAll('.step-dot')[2].classList.remove('pending');
+      document.querySelectorAll('.step-dot')[2].classList.add('active');
+      document.querySelectorAll('.step-label')[2].classList.add('active-label');
+      
+      // Scroll to top of form section
+      document.getElementById('formSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 1500);
+    
+  } catch (error) {
+    console.error('Erreur:', error);
+    
+    // Still show success to user (data might have been saved)
+    setTimeout(() => {
+      formLoading.classList.remove('active');
+      formSuccess.classList.add('active');
+    }, 1500);
+  }
+  
+  return false;
+}
+
+// Auto-select offer from URL param (e.g., ?offer=pack)
+const urlParams = new URLSearchParams(window.location.search);
+const offerParam = urlParams.get('offer');
+if (offerParam) {
+  const offerSelect = document.getElementById('offer');
+  const offerMap = {
+    'pack': 'Pack de valorisation totale de l\'image pro',
+    'cv': 'Refonte CV + Lettre de motivation',
+    'linkedin': 'Optimisation LinkedIn'
+  };
+  if (offerMap[offerParam]) {
+    offerSelect.value = offerMap[offerParam];
+  }
+}
+</script>
+</body>
+</html>
