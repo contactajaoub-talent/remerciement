@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merci pour votre achat - Talentiques</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            animation: slideInDown 0.6s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            font-size: 100px;
+            margin-bottom: 25px;
+            animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .success-card h1 {
+            color: #22863a;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .success-card p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .payment-details {
+            background: #f0f7ff;
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0eaff;
+            font-size: 14px;
+        }
+
+        .payment-row:last-child {
+            border-bottom: none;
+        }
+
+        .payment-row strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .payment-value {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .next-section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+            animation: slideInUp 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .next-section h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-marker {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-right: 25px;
+        }
+
+        .timeline-content h3 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .timeline-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+            animation: slideInUp 0.6s ease-out 0.4s both;
+        }
+
+        .form-section h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .form-intro {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .form-messages {
+            margin-bottom: 20px;
+        }
+
+        .success-message {
+            display: none;
+            background: #c6f6d5;
+            border: 2px solid #9ae6b4;
+            color: #22543d;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .error-message {
+            display: none;
+            background: #fed7d7;
+            border: 2px solid #fc8181;
+            color: #742a2a;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .support-section {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .support-section p {
+            color: #666;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .support-section strong {
+            color: #333;
+        }
+
+        .support-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .support-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .success-card, .next-section, .form-section {
+                padding: 30px 20px;
+            }
+
+            .success-card h1 {
+                font-size: 28px;
+            }
+
+            .next-section h2, .form-section h2 {
+                font-size: 22px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .success-icon {
+                font-size: 70px;
+            }
+
+            .timeline-marker {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+
+            .payment-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Success Card -->
+        <div class="success-card">
+            <div class="success-icon">✅</div>
+            <h1>Paiement reçu avec succès!</h1>
+            <p>Merci d'avoir choisi Talentiques. Nous sommes ravi de vous accompagner dans votre transformation professionnelle.</p>
+
+            <div class="payment-details">
+                <div class="payment-row">
+                    <strong>📦 Produit:</strong>
+                    <span class="payment-value">Pack de valorisation de l'image pro</span>
+                </div>
+                <div class="payment-row">
+                    <strong>💰 Montant:</strong>
+                    <span class="payment-value">45,00 EUR</span>
+                </div>
+                <div class="payment-row">
+                    <strong>📅 Date:</strong>
+                    <span class="payment-value" id="paymentDate">-</span>
+                </div>
+                <div class="payment-row">
+                    <strong>📧 Confirmation envoyée à:</strong>
+                    <span class="payment-value" id="paymentEmail">votre email</span>
+                </div>
+            </div>
+
+            <p style="color: #667eea; font-weight: 600; margin-top: 20px;">
+                ⏳ Complétez le formulaire ci-dessous pour débuter votre accompagnement
+            </p>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="next-section">
+            <h2>📋 Voici ce qui se passe maintenant</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3>Vous complétez votre profil</h3>
+                        <p>Remplissez le formulaire pour nous en dire plus sur vos objectifs et votre situation professionnelle.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h3>Nous analysons votre demande</h3>
+                        <p>Notre équipe examine attentivement votre profil et vos objectifs pour préparer votre accompagnement.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h3>Contact dans les 24h</h3>
+                        <p>Vous recevrez un appel ou un email pour débuter votre coaching et planifier vos sessions.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h3>Transformation en 30 jours</h3>
+                        <p>Démarrez votre parcours avec sessions de coaching, feedback et suivi personnalisé.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section">
+            <h2>📝 Complétez votre profil</h2>
+            <p class="form-intro">
+                Les informations suivantes nous permettront de vous proposer un accompagnement 100% adapté à votre situation. 
+                <br><em>Champs marqués d'un <span class="required">*</span> obligatoires</em>
+            </p>
+
+            <div class="form-messages">
+                <div id="successMessage" class="success-message">
+                    ✅ Votre profil a été enregistré avec succès! Notre équipe vous contactera dans les 24 heures.
+                </div>
+                <div id="errorMessage" class="error-message">
+                    ❌ Une erreur s'est produite. Veuillez réessayer ou nous contacter.
+                </div>
+            </div>
+
+            <form id="clientForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullName">Nom complet <span class="required">*</span></label>
+                        <input type="text" id="fullName" name="fullName" required placeholder="Jean Dupont" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="jean@example.com" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Téléphone / WhatsApp <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+33 6 12 34 56 78" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country">Pays <span class="required">*</span></label>
+                        <select id="country" name="country" required>
+                            <option value="">-- Sélectionnez votre pays --</option>
+                            <option value="France">🇫🇷 France</option>
+                            <option value="Suisse">🇨🇭 Suisse</option>
+                            <option value="Belgique">🇧🇪 Belgique</option>
+                            <option value="Canada">🇨🇦 Canada</option>
+                            <option value="Autre">🌍 Autre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="objective">Objectif professionnel <span class="required">*</span></label>
+                    <input type="text" id="objective" name="objective" required placeholder="Ex: Obtenir une promotion, changer de secteur, etc." />
+                </div>
+
+                <div class="form-group">
+                    <label for="targetRole">Poste cible <span class="required">*</span></label>
+                    <input type="text" id="targetRole" name="targetRole" required placeholder="Ex: Manager RH, Directeur Marketing, etc." />
+                </div>
+
+                <div class="form-group">
+                    <label for="urgency">Niveau d'urgence <span class="required">*</span></label>
+                    <select id="urgency" name="urgency" required>
+                        <option value="">-- Sélectionnez --</option>
+                        <option value="Urgent">⚡ Urgent (objectif dans 1 mois)</option>
+                        <option value="Normal">📅 Normal (objectif dans 3 mois)</option>
+                        <option value="Non urgent">🎯 Non urgent (objectif 6+ mois)</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="linkedin">Profil LinkedIn</label>
+                        <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/votreprofil" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cv">Lien vers votre CV (Google Drive, etc.)</label>
+                        <input type="url" id="cv" name="cv" placeholder="https://drive.google.com/file/..." />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Informations complémentaires</label>
+                    <textarea id="notes" name="notes" placeholder="Parlez-nous de votre situation, vos défis, vos attentes... Plus vous nous en dites, mieux nous pouvons vous aider!"></textarea>
+                </div>
+
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p>Enregistrement de votre profil...</p>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    ✓ Enregistrer mon profil
+                </button>
+            </form>
+
+            <div class="support-section">
+                <p><strong>Des questions ou des problèmes?</strong></p>
+                <p>📧 Email: <a href="mailto:talentiques@gmail.com" class="support-link">talentiques@gmail.com</a></p>
+                <p>💬 Nous répondons généralement dans les 2 heures</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== CONFIGURATION =====
+        const CONFIG = {
+            // URL du Google Apps Script Web App
+            GOOGLE_APPS_SCRIPT_URL: "https://script.google.com/macros/d/YOUR_DEPLOYMENT_ID/usercurrent/do",
+            
+            // Nom de l'offre
+            OFFER_NAME: "Pack de valorisation totale de l'image pro",
+            
+            // Statut du paiement (détecté automatiquement)
+            PAYMENT_STATUS: "Payé"
+        };
+
+        // ===== INITIALISATION =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Afficher la date actuelle
+            const today = new Date();
+            document.getElementById('paymentDate').textContent = today.toLocaleDateString('fr-FR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            // Détecter si on vient de PayPal (URL contient ?return ou similaire)
+            if (window.location.search.includes('return') || window.location.search.includes('success')) {
+                console.log("✅ Retour de PayPal détecté");
+            }
+
+            // Gérer la soumission du formulaire
+            document.getElementById('clientForm').addEventListener('submit', handleFormSubmit);
+        });
+
+        // ===== GESTION DU FORMULAIRE =====
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            // Masquer les messages
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+
+            // Afficher le chargement
+            loadingSpinner.style.display = 'block';
+            submitBtn.disabled = true;
+
+            try {
+                // Collecter les données du formulaire
+                const formData = {
+                    fullName: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    country: document.getElementById('country').value,
+                    objective: document.getElementById('objective').value,
+                    targetRole: document.getElementById('targetRole').value,
+                    urgency: document.getElementById('urgency').value,
+                    linkedin: document.getElementById('linkedin').value,
+                    cvLink: document.getElementById('cv').value,
+                    notes: document.getElementById('notes').value,
+                    
+                    // Données supplémentaires
+                    offer: CONFIG.OFFER_NAME,
+                    paymentStatus: CONFIG.PAYMENT_STATUS,
+                    timestamp: new Date().toISOString(),
+                    source: "Landing Page (PayPal Link)"
+                };
+
+                console.log("📤 Envoi des données...", formData);
+
+                // Envoyer les données au Google Apps Script
+                const response = await fetch(CONFIG.GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                // Afficher le succès
+                loadingSpinner.style.display = 'none';
+                successMessage.style.display = 'block';
+                submitBtn.textContent = '✅ Profil enregistré!';
+                submitBtn.disabled = true;
+
+                // Réinitialiser le formulaire après 3 secondes
+                setTimeout(() => {
+                    document.getElementById('clientForm').reset();
+                    submitBtn.textContent = '✓ Enregistrer mon profil';
+                    submitBtn.disabled = false;
+                }, 3000);
+
+                console.log("✅ Formulaire envoyé avec succès");
+
+            } catch (error) {
+                console.error('❌ Erreur:', error);
+                loadingSpinner.style.display = 'none';
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = '❌ Erreur: ' + error.message + '. Veuillez réessayer ou nous contacter.';
+                submitBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
