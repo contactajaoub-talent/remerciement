@@ -503,20 +503,23 @@ if (offerParam) {
   }
 }
 <script>
+
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwN7YnaemuXT7PCxEYJKbwmz8K7LcLikPY3WbkB2mNanYkE0HiUiUVIXQh8xmStF99R/exec";
 
 async function handleSubmit(e) {
+
   e.preventDefault();
 
-  const form = document.getElementById('intakeForm');
-  const formContent = document.getElementById('formContent');
-  const formLoading = document.getElementById('formLoading');
-  const formSuccess = document.getElementById('formSuccess');
-  const submitBtn = document.getElementById('submitBtn');
+  const form = document.getElementById("intakeForm");
+  const formContent = document.getElementById("formContent");
+  const formLoading = document.getElementById("formLoading");
+  const formSuccess = document.getElementById("formSuccess");
+  const submitBtn = document.getElementById("submitBtn");
 
   submitBtn.disabled = true;
-  formContent.style.display = 'none';
-  formLoading.classList.add('active');
+
+  formContent.style.display = "none";
+  formLoading.classList.add("active");
 
   const formData = new FormData(form);
 
@@ -535,6 +538,7 @@ async function handleSubmit(e) {
   };
 
   try {
+
     await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       mode: "no-cors",
@@ -545,44 +549,58 @@ async function handleSubmit(e) {
     });
 
     setTimeout(() => {
-      formLoading.classList.remove('active');
-      formSuccess.classList.add('active');
 
-      document.querySelectorAll('.step-dot')[1].classList.remove('active');
-      document.querySelectorAll('.step-dot')[1].classList.add('done');
-      document.querySelectorAll('.step-dot')[1].innerHTML =
+      formLoading.classList.remove("active");
+      formSuccess.classList.add("active");
+
+      document.querySelectorAll(".step-dot")[1].classList.remove("active");
+      document.querySelectorAll(".step-dot")[1].classList.add("done");
+
+      document.querySelectorAll(".step-dot")[1].innerHTML =
         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
-      document.querySelectorAll('.step-label')[1].classList.remove('active-label');
-      document.querySelectorAll('.step-label')[1].classList.add('done-label');
-      document.querySelectorAll('.step-connector')[1].classList.add('done');
-      document.querySelectorAll('.step-dot')[2].classList.remove('pending');
-      document.querySelectorAll('.step-dot')[2].classList.add('active');
-      document.querySelectorAll('.step-label')[2].classList.add('active-label');
+      document.querySelectorAll(".step-label")[1].classList.remove("active-label");
+      document.querySelectorAll(".step-label")[1].classList.add("done-label");
 
-      document.getElementById('formSection').scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+      document.querySelectorAll(".step-connector")[1].classList.add("done");
+
+      document.querySelectorAll(".step-dot")[2].classList.remove("pending");
+      document.querySelectorAll(".step-dot")[2].classList.add("active");
+
+      document.querySelectorAll(".step-label")[2].classList.add("active-label");
+
+      document.getElementById("formSection").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
       });
+
     }, 1200);
 
   } catch (error) {
+
     console.error("Erreur d'envoi :", error);
-    formLoading.classList.remove('active');
-    formContent.style.display = 'block';
+
+    formLoading.classList.remove("active");
+    formContent.style.display = "block";
     submitBtn.disabled = false;
-    alert("Une erreur est survenue pendant l'envoi. Veuillez réessayer.");
+
+    alert("Erreur lors de l'envoi du formulaire.");
+
   }
 
   return false;
 }
 
-// Préremplissage offre via URL
+
+/* Pré-remplissage de l'offre via URL */
+
 const urlParams = new URLSearchParams(window.location.search);
-const offerParam = urlParams.get('offer');
+const offerParam = urlParams.get("offer");
 
 if (offerParam) {
-  const offerSelect = document.getElementById('offer');
+
+  const offerSelect = document.getElementById("offer");
+
   const offerMap = {
     pack: "Pack de valorisation totale de l'image pro",
     cv: "Refonte CV + Lettre de motivation",
@@ -592,6 +610,7 @@ if (offerParam) {
   if (offerMap[offerParam]) {
     offerSelect.value = offerMap[offerParam];
   }
+
 }
-</script></body>
-</html>
+
+</script>
