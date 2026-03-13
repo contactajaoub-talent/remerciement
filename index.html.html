@@ -393,8 +393,17 @@ a{text-decoration:none;color:inherit}
 </footer>
 
 <script>
-<script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxnGuDfjHeatN54I53hIS4vo9kD1RcR0js3cIhKo-NXTEf5KYOfxUqmhq6xJd47I8hp/exec";
+/**
+ * IMPORTANT: Remplacez cette URL par l'URL de votre Google Apps Script Web App déployée.
+ * Pour obtenir cette URL:
+ * 1. Ouvrez votre projet Apps Script
+ * 2. Cliquez sur "Déployer" > "Nouveau déploiement"
+ * 3. Type: "Application Web"
+ * 4. Exécuter en tant que: "Moi"
+ * 5. Accès: "Tout le monde"
+ * 6. Copiez l'URL et collez-la ci-dessous
+ */
+const APPS_SCRIPT_URL = "VOTRE_URL_APPS_SCRIPT_ICI";
 
 async function handleSubmit(e) {
   e.preventDefault();
@@ -405,41 +414,36 @@ async function handleSubmit(e) {
   const formSuccess = document.getElementById('formSuccess');
   const submitBtn = document.getElementById('submitBtn');
   
+  // Disable button
   submitBtn.disabled = true;
+  
+  // Show loading
   formContent.style.display = 'none';
   formLoading.classList.add('active');
   
-  // COLLECTER LES DONNÉES EN JSON (au lieu de FormData!)
-  const formDataObj = {
-    offer: document.getElementById('offer').value,
-    fullName: document.getElementById('fullName').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    country: document.getElementById('country').value,
-    objective: document.getElementById('objective').value,
-    targetRole: document.getElementById('targetRole').value,
-    urgency: document.getElementById('urgency').value,
-    linkedin: document.getElementById('linkedin').value,
-    cvLink: document.getElementById('cvLink').value,
-    notes: document.getElementById('notes').value
-  };
+  // Collect form data
+  const formData = new FormData(form);
   
   try {
-    // Envoyer en JSON!
-    const response = await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formDataObj)
-    });
+    // Option A: Submit to Google Apps Script Web App
+    if (APPS_SCRIPT_URL !== "VOTRE_URL_APPS_SCRIPT_ICI") {
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: formData
+      });
+    }
     
-    console.log("✅ Données envoyées avec succès");
+    // Option B: Submit to Google Forms directly (backup)
+    // Uncomment and configure if using Google Forms instead:
+    // const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/VOTRE_FORM_ID/formResponse";
+    // await fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
     
+    // Show success after short delay for UX
     setTimeout(() => {
       formLoading.classList.remove('active');
       formSuccess.classList.add('active');
       
+      // Update step indicator
       document.querySelectorAll('.step-dot')[1].classList.remove('active');
       document.querySelectorAll('.step-dot')[1].classList.add('done');
       document.querySelectorAll('.step-dot')[1].innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
@@ -450,11 +454,14 @@ async function handleSubmit(e) {
       document.querySelectorAll('.step-dot')[2].classList.add('active');
       document.querySelectorAll('.step-label')[2].classList.add('active-label');
       
+      // Scroll to top of form section
       document.getElementById('formSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 1500);
     
   } catch (error) {
     console.error('Erreur:', error);
+    
+    // Still show success to user (data might have been saved)
     setTimeout(() => {
       formLoading.classList.remove('active');
       formSuccess.classList.add('active');
@@ -464,6 +471,7 @@ async function handleSubmit(e) {
   return false;
 }
 
+// Auto-select offer from URL param (e.g., ?offer=pack)
 const urlParams = new URLSearchParams(window.location.search);
 const offerParam = urlParams.get('offer');
 if (offerParam) {
@@ -478,218 +486,5 @@ if (offerParam) {
   }
 }
 </script>
-</script>
-/**
- * CODE À INTÉGRER DANS VOTRE FORMULAIRE HTML (Vercel)
- * =====================================================
- * Copiez ce code dans la section <script> de votre page
- */
-
-// ===== CONFIGURATION =====
-const FORM_CONFIG = {
-  // URL du Web App Google Apps Script (à remplacer)
-  WEB_APP_URL: https:https://script.google.com/macros/s/AKfycbxnGuDfjHeatN54I53hIS4vo9kD1RcR0js3cIhKo-NXTEf5KYOfxUqmhq6xJd47I8hp/exec
-  
-  // ID du formulaire HTML (adapter au vôtre)
-  FORM_ID: "clientForm",  // ← À adapter selon votre formulaire
-  
-  // Mapping des champs (adapter selon vos IDs)
-  FIELD_MAPPING: {
-    fullName: "fullName",      // ID ou name de votre champ nom
-    email: "email",            // ID ou name de votre champ email
-    phone: "phone",            // ID ou name de votre champ téléphone
-    country: "country",        // ID ou name de votre champ pays
-    objective: "objective",    // ID ou name de votre champ objectif
-    targetRole: "targetRole",  // ID ou name de votre champ poste
-    urgency: "urgency",        // ID ou name de votre champ urgence
-    linkedin: "linkedin",      // ID ou name de votre champ LinkedIn
-    cvLink: "cvLink",          // ID ou name de votre champ CV
-    notes: "notes"             // ID ou name de votre champ notes
-  },
-  
-  // Offre (adapter selon votre cas)
-  OFFER_NAME: "Pack de valorisation totale de l'image pro"
-};
-
-// ===== INITIALISATION =====
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("✅ Script d'intégration CRM chargé");
-  
-  // Récupérer le formulaire
-  const form = document.getElementById(FORM_CONFIG.FORM_ID);
-  
-  if (form) {
-    // Ajouter l'event listener à la soumission
-    form.addEventListener('submit', handleFormSubmit);
-    console.log("✅ Formulaire trouvé et listener ajouté");
-  } else {
-    console.warn("⚠️ Formulaire non trouvé avec l'ID: " + FORM_CONFIG.FORM_ID);
-    console.warn("Assurez-vous que votre formulaire a l'ID: " + FORM_CONFIG.FORM_ID);
-  }
-});
-
-// ===== GESTION DE LA SOUMISSION =====
-async function handleFormSubmit(e) {
-  e.preventDefault();
-  
-  console.log("📤 Soumission du formulaire en cours...");
-
-  try {
-    // Collecter les données du formulaire
-    const formData = collectFormData();
-    console.log("✅ Données collectées: ", formData);
-
-    // Ajouter les infos supplémentaires
-    formData.offer = FORM_CONFIG.OFFER_NAME;
-    formData.timestamp = new Date().toISOString();
-    formData.source = "Formulaire Vercel";
-
-    // Afficher le chargement (optionnel)
-    showLoading(true);
-
-    // Envoyer au Web App
-    const response = await fetch(FORM_CONFIG.WEB_APP_URL, {
-      method: 'POST',
-      mode: 'no-cors',  // Important: pas de CORS pour Google Apps Script
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    });
-
-    console.log("✅ Données envoyées avec succès");
-
-    // Afficher le succès
-    showLoading(false);
-    showSuccessMessage("✅ Votre profil a été enregistré avec succès!");
-    
-    // Réinitialiser le formulaire
-    document.getElementById(FORM_CONFIG.FORM_ID).reset();
-    
-    // Optionnel: Rediriger après 3 secondes
-    setTimeout(() => {
-      // Dé-commenter si vous voulez rediriger
-      // window.location.href = "https://votre-page-suivante.com";
-    }, 3000);
-
-  } catch (error) {
-    console.error("❌ Erreur: ", error);
-    showLoading(false);
-    showErrorMessage("❌ Une erreur s'est produite. Veuillez réessayer ou nous contacter.");
-  }
-}
-
-// ===== FONCTION: COLLECTER LES DONNÉES =====
-function collectFormData() {
-  const mapping = FORM_CONFIG.FIELD_MAPPING;
-  const data = {};
-
-  // Collecter chaque champ
-  for (const [key, fieldId] of Object.entries(mapping)) {
-    const element = document.getElementById(fieldId) || document.querySelector(`[name="${fieldId}"]`);
-    
-    if (element) {
-      data[key] = element.value || "";
-      console.log(`📝 ${key}: ${data[key]}`);
-    } else {
-      console.warn(`⚠️ Champ non trouvé: ${fieldId}`);
-      data[key] = "";
-    }
-  }
-
-  return data;
-}
-
-// ===== FONCTION: AFFICHER CHARGEMENT =====
-function showLoading(show) {
-  // Chercher un élément avec classe "loading" ou "spinner"
-  const loadingElement = document.querySelector('.loading-spinner') || 
-                        document.querySelector('.spinner') || 
-                        document.querySelector('[class*="loading"]');
-  
-  if (loadingElement) {
-    loadingElement.style.display = show ? 'block' : 'none';
-  }
-
-  // Désactiver le bouton de soumission
-  const submitBtn = document.querySelector('button[type="submit"]');
-  if (submitBtn) {
-    submitBtn.disabled = show;
-    submitBtn.style.opacity = show ? '0.6' : '1';
-    submitBtn.textContent = show ? '⏳ Envoi en cours...' : '✓ Enregistrer mon profil';
-  }
-}
-
-// ===== FONCTION: AFFICHER MESSAGE SUCCÈS =====
-function showSuccessMessage(message) {
-  // Chercher un élément message
-  let messageElement = document.querySelector('.success-message') || 
-                       document.querySelector('[class*="success"]');
-  
-  if (!messageElement) {
-    // Créer un élément si n'existe pas
-    messageElement = document.createElement('div');
-    messageElement.className = 'success-message';
-    messageElement.style.cssText = `
-      background: #c6f6d5;
-      border: 2px solid #9ae6b4;
-      color: #22543d;
-      padding: 16px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      text-align: center;
-      font-weight: 600;
-    `;
-    
-    const form = document.getElementById(FORM_CONFIG.FORM_ID);
-    if (form) {
-      form.parentElement.insertBefore(messageElement, form);
-    }
-  }
-
-  messageElement.textContent = message;
-  messageElement.style.display = 'block';
-}
-
-// ===== FONCTION: AFFICHER MESSAGE ERREUR =====
-function showErrorMessage(message) {
-  // Chercher un élément erreur
-  let messageElement = document.querySelector('.error-message') || 
-                       document.querySelector('[class*="error"]');
-  
-  if (!messageElement) {
-    // Créer un élément si n'existe pas
-    messageElement = document.createElement('div');
-    messageElement.className = 'error-message';
-    messageElement.style.cssText = `
-      background: #fed7d7;
-      border: 2px solid #fc8181;
-      color: #742a2a;
-      padding: 16px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      text-align: center;
-      font-weight: 600;
-    `;
-    
-    const form = document.getElementById(FORM_CONFIG.FORM_ID);
-    if (form) {
-      form.parentElement.insertBefore(messageElement, form);
-    }
-  }
-
-  messageElement.textContent = message;
-  messageElement.style.display = 'block';
-}
-
-// ===== DEBUG =====
-function debugFormFields() {
-  console.log("🔍 DEBUG - Champs du formulaire trouvés:");
-  for (const [key, fieldId] of Object.entries(FORM_CONFIG.FIELD_MAPPING)) {
-    const element = document.getElementById(fieldId) || document.querySelector(`[name="${fieldId}"]`);
-    console.log(`  ${key} (${fieldId}): ${element ? '✅ Trouvé' : '❌ Pas trouvé'}`);
-  }
-}
-
-// Pour tester: appeler debugFormFields() dans la console du navigateur</body>
+</body>
 </html>
